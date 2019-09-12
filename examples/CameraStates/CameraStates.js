@@ -2,7 +2,7 @@
  * 
  * The p5.EasyCam library - Easy 3D CameraControl for p5.js and WEBGL.
  *
- *   Copyright 2018 by Thomas Diewald (https://www.thomasdiewald.com)
+ *   Copyright 2018-2019 by p5.EasyCam authors
  *
  *   Source: https://github.com/diwi/p5.EasyCam
  *
@@ -41,18 +41,21 @@
  
  
  
-var easycam;
+var easycam, save_id = 1;
 
-var save_id = 1;
-
+let inconsolata;
+function preload() {
+  inconsolata = loadFont('inconsolata.woff');
+}
 
 function setup() { 
  
-  pixelDensity(1);
+  pixelDensity(2);
   
   var canvas = createCanvas(windowWidth, windowHeight, WEBGL);
   setAttributes('antialias', true);
-  
+  textFont(inconsolata);
+  textSize(18);
   console.log(Dw.EasyCam.INFO);
   
   easycam = new Dw.EasyCam(this._renderer, {distance : 300}); 
@@ -247,17 +250,23 @@ function initHUD(){
 
 function displayHUD(){
   easycam.beginHUD();
-  {
-    var state = easycam.getState();
-    
-    // update list
-    var ul = select('#hud-right');
-    ul.elt.children[0].innerHTML = nfs(frameRate()          , 1, 2);
-    ul.elt.children[1].innerHTML = nfs(easycam.getViewport(), 1, 0);
-    ul.elt.children[2].innerHTML = nfs(state.distance       , 1, 2);
-    ul.elt.children[3].innerHTML = nfs(state.center         , 1, 2);
-    ul.elt.children[4].innerHTML = nfs(state.rotation       , 1, 3);
-  }
+
+  var state = easycam.getState();
+  
+  // update list
+  var ul = select('#hud-right');
+  ul.elt.children[0].innerHTML = nfs(frameRate()          , 1, 2);
+  ul.elt.children[1].innerHTML = nfs(easycam.getViewport(), 1, 0);
+  ul.elt.children[2].innerHTML = nfs(state.distance       , 1, 2);
+  ul.elt.children[3].innerHTML = nfs(state.center         , 1, 2);
+  ul.elt.children[4].innerHTML = nfs(state.rotation       , 1, 3);
+
+  // Draw screen-aligned text to the canvas
+  push();
+  translate(15, 200, 0);
+  fill(255, 255, 255);
+  text("Frame count: "+frameCount,0,0);
+  pop();
 
   easycam.endHUD();
 }

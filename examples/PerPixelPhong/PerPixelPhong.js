@@ -2,7 +2,7 @@
  * 
  * The p5.EasyCam library - Easy 3D CameraControl for p5.js and WEBGL.
  *
- *   Copyright 2018 by Thomas Diewald (https://www.thomasdiewald.com)
+ *   Copyright 2018-2019 by p5.EasyCam authors
  *
  *   Source: https://github.com/diwi/p5.EasyCam
  *
@@ -20,7 +20,7 @@
 //
 // This example shows how to render a scene using a custom shader for lighting.
 //
-// Per Pixel Phong lightning:
+// Per Pixel Phong lighting:
 //
 // The lighting calculations for the diffuse and specular contributions are
 // all done in the fragment shader, per pixel.

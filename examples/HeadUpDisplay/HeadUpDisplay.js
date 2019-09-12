@@ -2,7 +2,7 @@
  * 
  * The p5.EasyCam library - Easy 3D CameraControl for p5.js and WEBGL.
  *
- *   Copyright 2018 by Thomas Diewald (https://www.thomasdiewald.com)
+ *   Copyright 2018-2019 by p5.EasyCam authors
  *
  *   Source: https://github.com/diwi/p5.EasyCam
  *
@@ -36,7 +36,7 @@ var easycam;
 
 function setup() {  
 
-  pixelDensity(1);
+  pixelDensity(2);
   
   createCanvas(windowWidth, windowHeight, WEBGL);
   setAttributes('antialias', true);

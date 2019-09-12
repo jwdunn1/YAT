@@ -605,9 +605,14 @@ class EasyCam {
       this.camLAT = this.getCenter  (this.camLAT);
       this.camRUP = this.getUpVector(this.camRUP);
       
-      renderer._curCamera.camera(this.camEYE[0], this.camEYE[1], this.camEYE[2],
-                      this.camLAT[0], this.camLAT[1], this.camLAT[2],
-                      this.camRUP[0], this.camRUP[1], this.camRUP[2]);
+      if(undefined===renderer._curCamera)
+        renderer.camera(this.camEYE[0], this.camEYE[1], this.camEYE[2],
+                        this.camLAT[0], this.camLAT[1], this.camLAT[2],
+                        this.camRUP[0], this.camRUP[1], this.camRUP[2]);
+      else
+        renderer._curCamera.camera(this.camEYE[0], this.camEYE[1], this.camEYE[2],
+                        this.camLAT[0], this.camLAT[1], this.camLAT[2],
+                        this.camRUP[0], this.camRUP[1], this.camRUP[2]);
     }
 
   }
@@ -1021,7 +1026,7 @@ class EasyCam {
     renderer = renderer || cam.renderer;
     
     if(!renderer) return;
-    renderer.push();
+    this.pushed_rendererState = renderer.push();
     
     var gl = renderer.drawingContext;
     var w = (w !== undefined) ? w : renderer.width;
@@ -1041,7 +1046,7 @@ class EasyCam {
     // 3) set new modelview (identity)
     renderer.resetMatrix();
     // 4) set new projection (ortho)
-    renderer.ortho(0, w, -h, 0, -d, +d);
+    renderer._curCamera.ortho(0, w, -h, 0, -d, +d);
     // renderer.ortho();
     // renderer.translate(-w/2, -h/2);
 
@@ -1070,7 +1075,7 @@ class EasyCam {
     renderer.uPMatrix .set(this.pushed_uPMatrix );
     // 1) enable DEPTH_TEST
     gl.enable(gl.DEPTH_TEST);
-    renderer.pop();
+    renderer.pop(this.pushed_rendererState);
   }
 
   

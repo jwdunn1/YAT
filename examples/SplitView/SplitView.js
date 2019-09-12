@@ -2,7 +2,7 @@
  * 
  * The p5.EasyCam library - Easy 3D CameraControl for p5.js and WEBGL.
  *
- *   Copyright 2018 by Thomas Diewald (https://www.thomasdiewald.com)
+ *   Copyright 2018-2019 by p5.EasyCam authors
  *
  *   Source: https://github.com/diwi/p5.EasyCam
  *
@@ -22,75 +22,16 @@
 //
 // Two cameras, each one owns its own rendertarget.
 //
-// Note: p5 (v0.5.16) is a bit bugy here.
-//       AntiAliasing is disabled + this demo comes with a little patch to be
-//       be able to execute.
-//
-// https://github.com/processing/p5.js/issues/2479
-// https://github.com/processing/p5.js/issues/2478
 //
  
-var easycam1;
-var easycam2;
+var easycam1, easycam2;
 
 
+function setup() {
 
-
-
-// due to a current bug it seems antialiasing cant be set to graphics 
-// via the official api.
-// also, this allows to create a webgl2 context
-
-var attributes = {
-  alpha: true, // canvas contains an alpha buffer.
-  depth: true, // drawing buffer has a depth buffer of at least 16 bits.
-  stencil: true, // drawing buffer has a stencil buffer of at least 8 bits.
-  antialias: true, //  whether or not to perform anti-aliasing.
-  premultipliedAlpha: false, // drawing buffer contains colors with pre-multiplied alpha.
-  preserveDrawingBuffer: true, // buffers will not be cleared
-  failIfMajorPerformanceCaveat: true
-};
-
-
-p5.RendererGL.prototype._initContext = function() {
-  
-  this.attributes = attributes; // use custom attributes
-
-  try {
-    this.drawingContext = this.canvas.getContext('webgl2', this.attributes)
-                       || this.canvas.getContext('webgl', this.attributes)
-                       || this.canvas.getContext('experimental-webgl', this.attributes)
-                        ;
-    if (this.drawingContext) {
-      var gl = this.drawingContext;
-      gl.enable(gl.DEPTH_TEST);
-      gl.depthFunc(gl.LEQUAL);
-      gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-      this._viewport = gl.getParameter(gl.VIEWPORT);
-    } else {
-      throw new Error('Error creating webgl context');
-    }
-  } catch (er) {
-    throw new Error(er);
-  }
-};
-
-
-
-
-
-function setup() { 
-
-  pixelDensity(1);
-  // p5.BUG
-  // var canvas = createCanvas(windowWidth, windowHeight, WEBGL);
-  // setAttributes('antialias', true);
+  pixelDensity(2);
 
   var canvas = createCanvas(windowWidth, windowHeight);
-
-  // console.log(this);
-  // console.log(this._renderer);
-  // console.log(this._renderer._pInst);
 
   var w = Math.ceil(windowWidth / 2);
   var h = windowHeight;
@@ -120,28 +61,6 @@ function setup() {
   // set viewports
   easycam1.setViewport([0,0,w,h]);
   easycam2.setViewport([w,0,w,h]);
-  
-  // some debug stuff, p5 is quite confusing at this point
-  // console.log("--------------------------------")
-  // console.log("this");
-  // console.log(this);
-  // console.log("--------------------------------")
-  // console.log("canvas");
-  // console.log(canvas);
-  // console.log("--------------------------------")
-  // console.log("graphics");
-  // console.log(graphics1);
-  // console.log(graphics2);
-  // console.log("--------------------------------")
-  // console.log("easycam.renderer");
-  // console.log(easycam1.renderer);
-  // console.log(easycam2.renderer);
-  // console.log("--------------------------------")
-  // console.log("easycam.graphics");
-  // console.log(easycam1.graphics);
-  // console.log(easycam2.graphics);
-  // console.log("--------------------------------")
-
 } 
 
 
@@ -284,9 +203,6 @@ function mousePressed(){
 
 
 
-
-
-
 function handleSuperController(cameralist){
 
   if(keyIsPressed && key === ' '){
@@ -323,66 +239,3 @@ function handleSuperController(cameralist){
   }
   
 }
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-//
-// patches, bug fixes, workarounds, ...
-//
-////////////////////////////////////////////////////////////////////////////////
-
-p5.RendererGL.prototype._applyColorBlend = function(v1,v2,v3,a){
-  var gl = this.GL;
-  
-  // p5.BUG
-  var inst = this._pInst;
-  if(inst instanceof p5.Graphics){
-    var inst = inst._pInst;
-  }
-  // p5.BUG
-  
-
-  var color = inst.color.apply(inst, arguments);
-  var colors = color._array;
-  if(colors[colors.length-1] < 1.0){
-    gl.depthMask(false);
-    gl.enable(gl.BLEND);
-    gl.blendEquation( gl.FUNC_ADD );
-    gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
-  } else {
-    gl.depthMask(true);
-    gl.disable(gl.BLEND);
-  }
-  return colors;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
