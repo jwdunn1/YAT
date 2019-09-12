@@ -10,6 +10,7 @@ and combines new useful features with the great look and feel of the original ve
 This p5js library version was started by Thomas Diewald in 2017.
 
 Processing/Java version of this project: https://github.com/diwi/peasycam/tree/PeasyCam3
+
 Original (abandoned) fork source: https://github.com/diwi/p5.EasyCam
 
 
@@ -58,7 +59,7 @@ function draw(){
   box(200);
 }
 ```
-something to play with: [jsfiddle](https://jsfiddle.net/intrinsica/vau7r6em/3/)
+something to play with: [jsfiddle](https://jsfiddle.net/intrinsica/n95sgbvr/)
 
 
 ## Reference
