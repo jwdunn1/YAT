@@ -64,7 +64,7 @@ something to play with: [jsfiddle](https://jsfiddle.net/intrinsica/n95sgbvr/)
 
 ## Reference
 
-  - [p5.EasyCam.documentation](https://jwilliamdunn.com/p5.EasyCam/documentation/p5.easycam.docs.md)
+  - [p5.EasyCam.documentation](https://github.com/jwdunn1/p5.EasyCam/blob/master/documentation/p5.easycam.docs.md)
   
   
 ```javascript
