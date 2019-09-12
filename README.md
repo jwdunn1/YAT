@@ -16,8 +16,8 @@ Original (abandoned) fork source: https://github.com/diwi/p5.EasyCam
 
 ## Releases
 
-- [p5.easycam.js](https://rawgit.com/jwdunn1/p5.EasyCam/master/p5.easycam.js)
-- [p5.easycam.min.js](https://rawgit.com/jwdunn1/p5.EasyCam/master/p5.easycam.min.js)
+- [p5.easycam.js](https://jwilliamdunn.com/p5.EasyCam/p5.easycam.js)
+- [p5.easycam.min.js](https://jwilliamdunn.com/p5.EasyCam/p5.easycam.min.js)
 - [All Releases](https://github.com/jwdunn1/p5.EasyCam/releases)
 
 
